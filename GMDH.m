@@ -19,7 +19,7 @@ function gmdh=GMDH(PSD,X,Y)
         for j=1:size(mergedList,1)
             mm=mergedList(j,1);
             nn=mergedList(j,2);
-            [ Norons(j).value, Norons(j).Err,Norons(j).path]=CreatNewNeron(currentNoron(mm).value,currentNoron(nn).value,Y,[mm,nn]);%only for test
+            [ Norons(j).value,Norons(j).Coff, Norons(j).Err,Norons(j).path]=CreatNewNeron(currentNoron(mm).value,currentNoron(nn).value,Y,[mm,nn]);%only for test
         end
 
         %moratab kon

@@ -1,4 +1,4 @@
-function [y_prime,err,path]=CreatNewNeron(vector_x1,vector_x2,vector_target,path)
+function [y_prime,a_star,err,path]=CreatNewNeron(vector_x1,vector_x2,vector_target,path)
     A=VolterraSeries(vector_x1,vector_x2);
 %     [yy,errr]=NeronError(A,vector_target);
     a_star=pinv(A)*vector_target;

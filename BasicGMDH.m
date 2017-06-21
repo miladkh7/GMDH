@@ -1,32 +1,23 @@
-%%% frist try
-% shabake GMDH 3 laye be ravesh PSD
+%%% secend try
+% CopyRight By Milad khaleghi 2017 guilan university
 %%
 clc;clear;close all;
-
-
-
 %% DataSetes
-  [x,t] = bodyfat_dataset;
-%   [x,t] = abalone_dataset  ;
-x=x';
-t=t';
-%hanoz bakhshe validation o test ro joda nakardam ke bayad etefagh biofte
+[x,t] = bodyfat_dataset;
+if size(x,1) <size(x,2);x=x';t=t';end
 
 %% GMDH parametes
 PSD=[10 20 20 10 10 10 10 10 10 10 10 10 10 10 10 2];% Number max allowed neron in each layer
-maxLayers=numel(PSD); % bayad montaghel shavad
-testCof=.15;
-validateCof=.15;
+validateCof=.20;
 %% Modeling
 nSamples=length(x(:,1));
-nElement=length(x(1,:));
 nValition=ceil(validateCof*nSamples);
-nTest=ceil(testCof*nSamples);
-nTrain=nSamples-nValition-nTest;
-% layers=cell(maxLayers,1);
-
-resultTrain=GMDH(PSD,x,t);
-
+nTrain=nSamples-nValition;
+Perm = randperm(nSamples);
+trainIndex = Perm(1:nTrain);
+validationIndex=Perm(nTrain+1:end);
+resultTrain=GMDH(PSD,x(trainIndex,:),t(trainIndex,:));
+validationVector=ApplyGMDH(resultTrain,x(validationIndex,:));
 %% Resultes 
 plot(t) 
 grid on
