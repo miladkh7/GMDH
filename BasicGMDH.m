@@ -18,8 +18,9 @@ trainIndex = Perm(1:nTrain);
 validationIndex=Perm(nTrain+1:end);
 resultTrain=GMDH(PSD,x(trainIndex,:),t(trainIndex,:));
 validationVector=ApplyGMDH(resultTrain,x(validationIndex,:));
+orginalVector=t(validationIndex,:);
 %% Resultes 
-plot(t) 
+% plot(t) 
 grid on
 hold on
 plot(resultTrain.Layers{end}.value)
