@@ -23,12 +23,12 @@ nElement=length(x(1,:));
 nValition=ceil(validateCof*nSamples);
 nTest=ceil(testCof*nSamples);
 nTrain=nSamples-nValition-nTest;
-layers=cell(maxLayers,1);
+% layers=cell(maxLayers,1);
 
-GMDH(PSD,x,t)
+resultTrain=GMDH(PSD,x,t);
 
 %% Resultes 
 plot(t) 
 grid on
 hold on
-% plot(Noronsss.value)
+plot(resultTrain.Layers{end}.value)
