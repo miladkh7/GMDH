@@ -37,7 +37,7 @@ function PlotLayout(layout,maxi)
         
         %it self
 
-        lineColor=myColor(randi([1,63]),:)
+        lineColor=myColor(randi([1,63]),:);
 %         lineColor=rand([1,3]);
                
         %lines
@@ -86,30 +86,30 @@ layout=repmat(struct('NO',0,'NOlayer',1,'NOnoron',1,'family',[],'Cordinate',[0;0
 end
 
 
-function PlotGMDH2(inputGMDH)
-   
-
-
-%% peyda kardan abade kol vase mokhtast
-%% peya kardan fasele ha
- %%% chideman monaseb har laye 
-    for i=1:numel(inputGMDH.Layers)
-        i;
-        PlotLayreNeron(inputGMDH.Layers{i})
-    end
-end
-
-function PlotLayreNeron(layer)
-    for i=1:numel(layer)
-     PlotNoron(layer(i))
-    end
-
-end
-%% function for plot shabke
-
-function PlotNoron(Noron)
-
-    for k=Noron.path
-%         line([x],[y])
-    end
-end
+% function PlotGMDH2(inputGMDH)
+%    
+% 
+% 
+% %% peyda kardan abade kol vase mokhtast
+% %% peya kardan fasele ha
+%  %%% chideman monaseb har laye 
+%     for i=1:numel(inputGMDH.Layers)
+%         i;
+%         PlotLayreNeron(inputGMDH.Layers{i})
+%     end
+% end
+% 
+% function PlotLayreNeron(layer)
+%     for i=1:numel(layer)
+%      PlotNoron(layer(i))
+%     end
+% 
+% end
+% %% function for plot shabke
+% 
+% function PlotNoron(Noron)
+% 
+%     for k=Noron.path
+% %         line([x],[y])
+%     end
+% end
