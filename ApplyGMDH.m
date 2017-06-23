@@ -14,8 +14,11 @@ function y=CalculateLayerOutput(L,X)
     N = numel(L);
     y = zeros(m,N);
     for i=1:numel(L)
-        x= X(:,L(i).path);
-        A=VolterraSeries(x(:,1),x(:,2));
+%         x= X(:,L(i).path);
+%         xx= X(4,L(i).path)
+%         
+%         X(:,L(i).path(2))
+        A=VolterraSeries(X(:,L(i).path(1)),X(:,L(i).path(2)));
         y(:,i) = A*L(i).Coff;
     end
 end

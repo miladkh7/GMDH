@@ -2,9 +2,24 @@ function gmdh=GMDH(PSD,X,Y)
     PSD=[PSD 1];
     maxLayers=numel(PSD);
     layers=cell(maxLayers,1);
+    p=0;%% darsad teste error ha roye traing
+    %Shufle
+    suffleList=randperm(length(X));
+    X=X(suffleList,:);
+    Y=Y(suffleList,:);
+    %daste bandi
+    nTrain=ceil(.9*length(X));
+    X_train=X(1:nTrain,:);
+    Y_train=Y(1:nTrain,:);
+    X_test=X(nTrain+1:end,:);
+    Y_test=Y(nTrain+1:end,:);
+%     length(X_train(1,:))
     %initialize
-    for j=1:length(X(1,:))
-       currentNoron(j).value=X(:,j); %#ok 
+    
+     currentNoron=repmat(struct('value',0,'test',0),length(X_train(1,:)),1);
+    for j=1:length(X_train(1,:))
+       currentNoron(j).value=X_train(:,j); 
+       currentNoron(j).test=X_test(:,j);
     end
 
 %     j=1;
@@ -15,11 +30,14 @@ function gmdh=GMDH(PSD,X,Y)
     %gozine haye entekhab ro besaz
         mergedList=FindMergeIndex(numel(currentNoron));
         % #Sholud bayaad tedad noronahi ke sahte misharo amade onam
-        %noron hasho besaz
+        %#ISUE: vaghti repmat mikonam poresh nemikone:(
+%         Norons=repmat(struct('value',[],'test',[],'Coff',[], 'Err',0,'path',[]),numel(mergedList),1);
         for j=1:size(mergedList,1)
             mm=mergedList(j,1);
             nn=mergedList(j,2);
-            [ Norons(j).value,Norons(j).Coff, Norons(j).Err,Norons(j).path]=CreatNewNeron(currentNoron(mm).value,currentNoron(nn).value,Y,[mm,nn]);%only for test
+           [ Norons(j).value,Norons(j).Coff, Err_train,Norons(j).path]=CreatNewNeron(currentNoron(mm).value,currentNoron(nn).value,Y_train,[mm,nn])  %#ok
+           [ Norons(j).test,~, Err_test,~]=CreatNewNeron(currentNoron(mm).test,currentNoron(nn).test,Y_test,[mm,nn]); %#ok
+           Norons(j).Err=p*abs(Err_train);+(1-p)*abs(Err_test); %#ok
         end
 
         %moratab kon
