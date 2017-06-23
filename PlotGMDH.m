@@ -1,8 +1,10 @@
 
 
 function layout=PlotGMDH(inputGMDH)
-   close all;
+%    close all;
+
     [layout, maxi]=GMDHLayout(inputGMDH);
+    figure;
     PlotLayout(layout,maxi)
     
 end

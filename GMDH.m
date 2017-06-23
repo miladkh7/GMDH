@@ -8,6 +8,7 @@ function gmdh=GMDH(PSD,X,Y)
     X=X(suffleList,:);
     Y=Y(suffleList,:);
     %daste bandi
+    
     nTrain=ceil(.9*length(X));
     X_train=X(1:nTrain,:);
     Y_train=Y(1:nTrain,:);
@@ -35,9 +36,12 @@ function gmdh=GMDH(PSD,X,Y)
         for j=1:size(mergedList,1)
             mm=mergedList(j,1);
             nn=mergedList(j,2);
-           [ Norons(j).value,Norons(j).Coff, Err_train,Norons(j).path]=CreatNewNeron(currentNoron(mm).value,currentNoron(nn).value,Y_train,[mm,nn])  %#ok
+           [ Norons(j).value,Norons(j).Coff, Err_train,Norons(j).path]=CreatNewNeron(currentNoron(mm).value,currentNoron(nn).value,Y_train,[mm,nn]);  %#ok
            [ Norons(j).test,~, Err_test,~]=CreatNewNeron(currentNoron(mm).test,currentNoron(nn).test,Y_test,[mm,nn]); %#ok
-           Norons(j).Err=p*abs(Err_train);+(1-p)*abs(Err_test); %#ok
+%            Err_train
+%            Err_test
+%            Err_total=p*abs(Err_train);+(1-p)*abs(Err_test)
+           Norons(j).Err=p*abs(Err_train)+(1-p)*abs(Err_test); %#ok
         end
 
         %moratab kon
@@ -51,11 +55,19 @@ function gmdh=GMDH(PSD,X,Y)
         currentNoron=Norons;
         layers{n}=currentNoron;
         % display state
-        disp(['min Error = ' num2str(Norons(1).Err)]);
+         disp(['min Error in Layer ' num2str(n) ' is neron '  num2str(j) ' = ' num2str(Norons(1).Err)]);
     %   plot(currentNoron(1).value)
 
     end
+%     structLayer=layers;
+%     for k=1:length(layers)
+%         rmfield(structLayer{k,1},'test');
+%     end
     gmdh.Layers=layers;
+    gmdh.suffleList_train=suffleList(1:nTrain);
+    gmdh.suffleList_test=suffleList(nTrain:end);
+    gmdh.nTrain=nTrain;
+    
 %      mergedList=FindMergeIndex(numel(currentNoron));
 %     [ Noronsss.value, Noronsss.Err]=CreatNewNeron(currentNoron(mergedList(1)).value,currentNoron(mergedList(2)).value,Y);
 
