@@ -7,7 +7,7 @@ clc;clear;close all;
 if size(x,1) <size(x,2);x=x';t=t';end
 
 %% GMDH parametes
-PSD=[4 3 2];% Number max allowed neron in each layer
+PSD=[12 4 3 2];% Number max allowed neron in each layer
 validateCof=.20;
 %% Modeling
 nSamples=length(x(:,1));
@@ -22,11 +22,9 @@ orginalVector=t(validationIndex,:);
 %% Resultes 
 
 figure;
-PlotGMDH(trainedGMDH)
-
-figure;
 PlotResults(t(validationIndex,:), outputs, 'Validation');
 
 figure;
 PlotResults(t(trainedGMDH.suffleList_train,:), trainedGMDH.Layers{end}.value, 'Train Data');
 
+PlotGMDH(trainedGMDH)

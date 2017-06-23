@@ -10,9 +10,9 @@ function layout=PlotGMDH(inputGMDH)
 end
 
 function PlotLayout(layout,maxi)
-    h=1;
+    h=13;
     dyVectorPrime=[];
-    plot(1:3,h);
+      
     myColor=colormap(prism);
     grid on
     set(gca, 'XTickLabel', []);
@@ -20,6 +20,9 @@ function PlotLayout(layout,maxi)
     hold on
     
     for f=1:numel(layout)
+      
+
+        
 %           disp(['Layer ' num2str(layout(f).NOlayer)  ' Noron ' num2str(layout(f).NOnoron) ' path [ ' num2str(layout(f).family) ' ]'])
         %yaftan mokhtaste khodesh
         dy=h/(maxi(layout(f).NOlayer)+1);
@@ -29,27 +32,41 @@ function PlotLayout(layout,maxi)
         %Parent indecies
         index1=layout(f).family(1);
         index2=layout(f).family(2);
-        y_p1=layout(index1).Cordinate(2);
-        y_p2=layout(index2).Cordinate(2);
+        y_p1=index1;
+        y_p2=index2;
+        
+        % #hint: y_p at frist is index;
+        if layout(f).NOlayer ~=1
+            y_p1=layout(y_p1).Cordinate(2);
+            y_p2=layout(y_p2).Cordinate(2);
+        end
         y_bar=.5*(y_p1+y_p2);
         [~,yIndex]=min(abs(dyVectorPrime-y_bar));
         bestY=dyVectorPrime(yIndex);
         dyVectorPrime(yIndex)=[]; %#ok
-        layout(f).Cordinate=[layout(f).NOlayer,bestY];
+        layout(f).Cordinate=[layout(f).NOlayer+1,bestY];
         
         %it self
 
         lineColor=myColor(randi([1,63]),:);
 %         lineColor=rand([1,3]);
                
+        if layout(f).NOlayer ~=1
+            line([layout(f).Cordinate(1),layout(index1).Cordinate(1)],[layout(f).Cordinate(2),y_p1],'color',lineColor,'linewidth',1.5)        
+            line([layout(f).Cordinate(1),layout(index2).Cordinate(1)],[layout(f).Cordinate(2),y_p2],'color',lineColor,'linewidth',1.5)
+        
+        else
+                line([layout(f).Cordinate(1),0],[layout(f).Cordinate(2),y_p1],'color',lineColor,'linewidth',1.5)        
+             line([layout(f).Cordinate(1),0],[layout(f).Cordinate(2),y_p2],'color',lineColor,'linewidth',1.5)
+
+        end
         %lines
-        line([layout(f).Cordinate(1),layout(index1).Cordinate(1)],[layout(f).Cordinate(2),y_p1],'color',lineColor,'linewidth',1.5)        
-        line([layout(f).Cordinate(1),layout(index2).Cordinate(1)],[layout(f).Cordinate(2),y_p2],'color',lineColor,'linewidth',1.5)
      end
      for f=1:numel(layout)
-         plot(layout(f).Cordinate(1),layout(f).Cordinate(2),'o','MarkerSize',11,'markerfacecolor','red')
+         plot(layout(f).Cordinate(1),layout(f).Cordinate(2),'o','MarkerSize',11,'markerfacecolor','green')
      end
-
+ plot(0,1:13,'o','MarkerSize',11,'markerfacecolor','red');
+ 
 end
 
 function [layout, maxi]=GMDHLayout(inputGMDH)
@@ -73,7 +90,7 @@ layout=repmat(struct('NO',0,'NOlayer',1,'NOnoron',1,'family',[],'Cordinate',[0;0
             layout(k).NOlayer=i;
             layout(k).NOnoron=j;
 %             layout(k).family
-            if k<=numel(inputGMDH.Layers{1}); activeNoron.path=[k;k];end
+%             if k<=numel(inputGMDH.Layers{1}); activeNoron.path=[k;k];end
             
 %             activeNoron.path(1)
 %             activeNoron.path(2)

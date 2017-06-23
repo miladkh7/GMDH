@@ -67,6 +67,8 @@ function gmdh=GMDH(PSD,X,Y)
     gmdh.suffleList_train=suffleList(1:nTrain);
     gmdh.suffleList_test=suffleList(nTrain:end);
     gmdh.nTrain=nTrain;
+    gmdh.nSamle=length(X);
+    gmdh.nParameter=size(X,2);
     
 %      mergedList=FindMergeIndex(numel(currentNoron));
 %     [ Noronsss.value, Noronsss.Err]=CreatNewNeron(currentNoron(mergedList(1)).value,currentNoron(mergedList(2)).value,Y);
