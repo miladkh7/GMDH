@@ -1,5 +1,5 @@
 function PlotResults(Targets, Outputs, Title)
- %Copy right by matlab site
+ %CopyRight by matlab site
     Errors = Targets - Outputs;
     MSE = mean(Errors.^2);
     RMSE = sqrt(MSE);

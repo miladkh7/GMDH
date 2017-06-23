@@ -9,15 +9,10 @@ function output1=ApplyGMDH(inputGMDH,X)
 end
 
 function y=CalculateLayerOutput(L,X)
-%      y=repmat(struct('value',0),size(X,1),1);
     m = size(X,1);
     N = numel(L);
     y = zeros(m,N);
     for i=1:numel(L)
-%         x= X(:,L(i).path);
-%         xx= X(4,L(i).path)
-%         
-%         X(:,L(i).path(2))
         A=VolterraSeries(X(:,L(i).path(1)),X(:,L(i).path(2)));
         y(:,i) = A*L(i).Coff;
     end
