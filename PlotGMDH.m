@@ -39,7 +39,7 @@ function PlotLayout(layout,maxi,nParameter)
         dyVectorPrime(yIndex)=[]; %#ok
         layout(f).Cordinate=[layout(f).NOlayer+1,bestY];
         lineColor=myColor(randi([1,63]),:);
-%         lineColor=rand([1,3]);
+        lineColor=rand([1,3]);
                
         if layout(f).NOlayer ~=1
             line([layout(f).Cordinate(1),layout(index1).Cordinate(1)],[layout(f).Cordinate(2),y_p1],'color',lineColor,'linewidth',1.5)        
